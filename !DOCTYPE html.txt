@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marmaduke's Home Bakery</title>
+<meta name="description" content="Marmaduke's is a cosy luncheon-style bakery, inspired by cats.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --saffron: #F48C06;
+    --cream: #F6EFE4;
+    --paper: #FBF7EF;
+    --redorche: #dc2f02;
+    --sage: #7C8B6F;
+    --gold: #C9A66B;
+    --ink: #2A211C;
+    --cherry: #6A040F;
+    --line: rgba(60,42,33,0.15);
+    --radius: 4px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "Work Sans", -apple-system, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,h2,h3, .display {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--saffron);
+  }
+
+  a { color: inherit; }
+
+  img { max-width:100%; display:block; }
+
+  .wrap{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+
+  /* skip link for keyboard users */
+  .skip-link{
+    position:absolute; left:-999px; top:0;
+    background:var(--saffron); color:var(--cream);
+    padding:10px 16px; z-index:100;
+  }
+  .skip-link:focus{ left: 10px; top: 10px; }
+
+  :focus-visible{
+    outline: 2px solid var(--rust);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position: sticky; top:0; z-index: 20;
+    background: rgba(246,239,228,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 16px 0;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-family:"Fraunces", serif; font-weight:600; font-size:1.25rem;
+    text-decoration:none; color: var(--saffron);
+  }
+  .brand-mark{ width:28px; height:28px; }
+
+  nav ul{
+    list-style:none; display:flex; gap: 28px; margin:0; padding:0;
+  }
+  nav a{
+    text-decoration:none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--saffron);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color 0.2s ease;
+  }
+  nav a:hover, nav a:focus-visible{ border-color: var(--redorche); }
+
+  .nav-toggle{ display:none; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding: 120px 0 90px;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 18% 20%, rgba(201,166,107,0.18), transparent 55%),
+      var(--cream);
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:0.8rem;
+    letter-spacing: 0.14em;
+    text-transform:uppercase;
+    color: var(--rust);
+    font-weight:600;
+    margin-bottom: 18px;
+  }
+  .hero h1{
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1.05;
+  }
+  .hero h1 em{
+    font-style: italic;
+    color: var(--redorche);
+  }
+  .hero p.lede{
+    margin-top: 22px;
+    font-size: 1.1rem;
+    max-width: 46ch;
+    color: #4A3B31;
+  }
+  .hero-ctas{
+    margin-top: 32px;
+    display:flex; gap: 16px; flex-wrap:wrap;
+  }
+
+  .btn{
+    display:inline-block;
+    padding: 13px 26px;
+    border-radius: var(--radius);
+    font-weight:600;
+    font-size:0.95rem;
+    text-decoration:none;
+    border: 1px solid var(--saffron);
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-primary{
+    background: var(--saffron);
+    color: var(--cream);
+  }
+  .btn-primary:hover{ background:#2c1e17; transform: translateY(-1px); }
+  .btn-ghost{
+    background:transparent;
+    color:var(--saffron);
+  }
+  .btn-ghost:hover{ background: rgba(60,42,33,0.06); }
+
+  /* ---------- Section shells ---------- */
+  section{ padding: 88px 0; }
+  .section-head{
+    max-width: 60ch;
+    margin-bottom: 48px;
+  }
+  .section-head .eyebrow{ margin-bottom:10px; }
+  .section-head h2{ font-size: clamp(1.9rem, 3vw, 2.6rem); }
+  .section-head p{ margin-top:14px; color:#4A3B31; }
+
+  .alt{ background: var(--paper); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+
+  /* ---------- About ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items:center;
+  }
+  .about-photo{
+    aspect-ratio: 4/3;
+    border-radius: var(--radius);
+    background:
+      linear-gradient(135deg, rgba(168,83,46,0.35), rgba(124,139,111,0.35)),
+      repeating-linear-gradient(45deg, #d8c9b0 0 12px, #cfbfa4 12px 24px);
+  }
+  .about p + p{ margin-top: 14px; }
+
+  /* ---------- Menu — grouped by time of day, chalkboard style ---------- */
+  .menu-periods{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+  .period{
+    background: var(--saffron);
+    color: var(--cream);
+    border-radius: var(--radius);
+    padding: 30px 26px;
+  }
+  .period h3{
+    color: var(--cream);
+    font-size: 1.3rem;
+    font-style: italic;
+    margin-bottom: 6px;
+  }
+  .period .time{
+    display:block;
+    font-size: 0.8rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color: rgba(246,239,228,0.6);
+    margin-bottom: 20px;
+  }
+  .period ul{ list-style:none; margin:0; padding:0; }
+  .period li{
+    display:flex;
+    justify-content:space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(246,239,228,0.2);
+    font-size: 0.95rem;
+  }
+  .period li:last-child{ border-bottom:none; }
+  .period li .price{ color: var(--gold); white-space:nowrap; }
+  .period li .name{ font-weight:500; }
+  .period li .desc{
+    display:block;
+    font-size:0.82rem;
+    color: rgba(246,239,228,0.65);
+    margin-top: 2px;
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .gallery div{
+    aspect-ratio: 1;
+    border-radius: var(--radius);
+  }
+  .gallery div:nth-child(1){ background: linear-gradient(160deg, #C9A66B, #A8532E); }
+  .gallery div:nth-child(2){ background: linear-gradient(160deg, #7C8B6F, #3C2A21); }
+  .gallery div:nth-child(3){ background: linear-gradient(160deg, #A8532E, #3C2A21); }
+  .gallery div:nth-child(4){ background: linear-gradient(160deg, #C9A66B, #7C8B6F); }
+
+  /* ---------- Hours & location ---------- */
+  .info-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+  .hours-table{
+    width:100%;
+    border-collapse: collapse;
+  }
+  .hours-table td{
+    padding: 11px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.98rem;
+  }
+  .hours-table td:last-child{ text-align:right; color:#4A3B31; }
+  .hours-table tr.today td{ color: var(--rust); font-weight:600; }
+
+  address{ font-style:normal; }
+  .info-list{ list-style:none; padding:0; margin: 22px 0 0; }
+  .info-list li{ padding: 8px 0; }
+  .info-list .label{
+    display:block; font-size:0.78rem; text-transform:uppercase;
+    letter-spacing:0.08em; color: var(--rust); margin-bottom:2px;
+  }
+
+  /* ---------- Contact / newsletter ---------- */
+  .contact-box{
+    background: var(--saffron);
+    color: var(--ink);
+    border-radius: var(--radius);
+    padding: 56px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items:center;
+  }
+  .contact-box h2{ color: var(--cream); }
+  .contact-box p{ color: rgba(246,239,228,0.75); margin-top:10px; }
+
+  form{ display:flex; flex-direction:column; gap:14px; }
+  .field label{
+    display:block; font-size:0.82rem; margin-bottom:6px;
+    color: rgba(246,239,228,0.75);
+  }
+  .field input, .field textarea{
+    width:100%;
+    padding: 12px 14px;
+    border-radius: var(--radius);
+    border: 1px solid rgba(246,239,228,0.3);
+    background: rgba(246,239,228,0.06);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 0.95rem;
+  }
+  .field textarea{ resize: vertical; min-height: 90px; }
+  .field input::placeholder, .field textarea::placeholder{ color: rgba(246,239,228,0.4); }
+  .field input:focus, .field textarea:focus{ outline: 2px solid var(--gold); border-color:transparent; }
+
+  form .btn-primary{
+    background: var(--cream);
+    border-color: var(--gold);
+    color: var(--saffron);
+    align-self:flex-start;
+    cursor:pointer;
+  }
+  form .btn-primary:hover{ background:#dbb87e; }
+
+  .form-note{ font-size:0.85rem; margin-top:4px; min-height: 1.2em; color: var(--gold); }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding: 40px 0;
+    border-top: 1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:center;
+    flex-wrap:wrap; gap:16px;
+    font-size:0.88rem;
+    color:#6b5a4c;
+  }
+  footer nav ul{ display:flex; gap:20px; }
+  footer a{ text-decoration:none; }
+  footer a:hover{ color: var(--rust); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .hero .wrap{ grid-template-columns: 1fr; }
+    .cup-scene{ order:-1; max-width:220px; }
+    .about-grid, .info-grid, .contact-box{ grid-template-columns: 1fr; }
+    .menu-periods{ grid-template-columns: 1fr; }
+    .gallery{ grid-template-columns: repeat(2,1fr); }
+    nav ul{ gap:16px; }
+    .contact-box{ padding: 36px 26px; }
+  }
+
+  @media (max-width: 620px){
+    nav ul{
+      position:fixed; inset: 64px 0 auto 0;
+      background: var(--cream);
+      flex-direction:column;
+      padding: 20px 28px;
+      border-bottom:1px solid var(--line);
+      transform: translateY(-130%);
+      transition: transform 0.25s ease;
+    }
+    nav ul.open{ transform: translateY(0); }
+    .nav-toggle{
+      display:inline-flex;
+      align-items:center; justify-content:center;
+      width:40px; height:40px;
+      background:none; border:1px solid var(--line); border-radius:var(--radius);
+      cursor:pointer;
+    }
+    .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
+      content:""; display:block; width:18px; height:2px; background:var(--saffron);
+      position:relative; transition: transform 0.2s ease;
+    }
+    .nav-toggle span::before{ position:absolute; top:-6px; }
+    .nav-toggle span::after{ position:absolute; top:6px; }
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <svg class="brand-mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4 9h13a3 3 0 0 1 0 6h-1" stroke="#A8532E" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M4 9v6a4 4 0 0 0 4 4h4a4 4 0 0 0 4-4v-2" stroke="#3C2A21" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M7 4.5c0 1-1 1-1 2s1 1 1 2M11 4.5c0 1-1 1-1 2s1 1 1 2" stroke="#C9A66B" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      Marmaduke's Home Bakery
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false" id="navToggle"><span></span></button>
+    <ul id="navMenu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#visit">Visit</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Home Bakery · Est. 2026</span>
+        <h1>Where every treat is <em>purrfect</em> </h1>
+        <p class="lede">Marmaduke's is a cosy luncheon-style bakery, inspired by cats.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#menu">See the menu</a>
+          <a class="btn btn-ghost" href="#visit">Find us</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src=""C:\Users\student\Downloads\marmaduke.jpg"" >
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div class="about-photo" role="img" aria-label="Warm interior of Amber and Ash coffee house"></div>
+      <div class="about">
+        <span class="eyebrow">Our story</span>
+        <h2>What started as a heartbreak, turned into a baking adventure.</h2>
+        <p>As a family, we have always owned and loved cats, which led to having a family of three - Dora, Garfield and Marmaduke.</p>
+        <p>Dora is the feisty tabby cat and kept the other two in their place. Garfield is gentle and a very sociable ginger tomcat. Marmaduke was, as his name suggests, a handsome marmalade cat that embodied sophistication.</p>
+        <p>Six years ago, Marmaduke passed away in an unfortunate accident, just before his fifth birthday. We were devastated. Ever since, we have wanted to keep Marmaduke's memory alive. So in honour of our beloved pet, Marmaduke's Home Bakery was born. </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu -->
+  <section class="alt" id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">On the board</span>
+        <h2>Our Specials</h2>
+      </div>
+      <div class="menu-periods">
+        <article class="period">
+          <h3>Morning</h3>
+          <span class="time">7:00 – 11:00</span>
+          <ul>
+            <li><span><span class="name">Flat White</span><span class="desc">Double shot, steamed whole milk</span></span><span class="price">£3.40</span></li>
+            <li><span><span class="name">Pour Over</span><span class="desc">Rotating single origin</span></span><span class="price">£3.80</span></li>
+            <li><span><span class="name">Almond Croissant</span><span class="desc">Baked from 6am</span></span><span class="price">£3.20</span></li>
+            <li><span><span class="name">Porridge Bowl</span><span class="desc">Oat milk, stewed fruit</span></span><span class="price">£4.50</span></li>
+          </ul>
+        </article>
+        <article class="period">
+          <h3>Meal Deal</h3>
+          <p class="meal-deal-subtitle">Choose 1 Main + 1 Side + 1 Drink</p>
+          
+  <div class="meal-category">
+    <h4>Main [Wrap, Toastie or Sandwich Bun]</h4>
+    <ul>
+      <li>
+        <span>
+          <span class="name">Chicken Sandwich</span>
+          <span class="desc">Grilled chicken, lettuce & house sauce</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <span class="name">Tuna Melt</span>
+          <span class="desc">Tuna, cheddar & toasted sourdough</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <span class="name">Veggie Wrap</span>
+          <span class="desc">Roasted vegetables, hummus & salad</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="meal-category">
+    <h4>Side</h4>
+    <ul>
+      <li>
+        <span>
+          <span class="name">Crisps</span>
+          <span class="desc">Sea salt & vinegar</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <span class="name">Potato Wedges</span>
+          <span class="desc">Triple cooked wedges with sea salt</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <span class="name">Sweet Potato Wedges</span>
+          <span class="desc">Seasoned with salt and smoked paprika</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="meal-category">
+    <h4>Drink</h4>
+    <ul>
+      <li>
+        <span>
+          <span class="name">Can of Pop</span>
+          <span class="desc">Diet Coke, Fanta, Sprite, Cream Soda</span>
+        </span>
+      </li>
+      <li>
+        <span>
+          <span class="name">Water</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+
+</article>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">A look inside</span>
+        <h2>The room, most mornings</h2>
+      </div>
+      <div class="gallery">
+        <div role="img" aria-label="Coffee beans and roasting"></div>
+        <div role="img" aria-label="Window seating"></div>
+        <div role="img" aria-label="Latte art"></div>
+        <div role="img" aria-label="Bakery case"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hours & location -->
+  <section class="alt" id="visit">
+    <div class="wrap info-grid">
+      <div>
+        <span class="eyebrow">Opening hours</span>
+        <h2>When to find us</h2>
+        <table class="hours-table">
+          <tbody>
+            <tr><td>Monday – Friday</td><td>7:00am – 6:00pm</td></tr>
+            <tr class="today"><td>Saturday</td><td>8:00am – 6:00pm</td></tr>
+            <tr><td>Sunday</td><td>8:00am – 4:00pm</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <span class="eyebrow">Location</span>
+        <h2>Where to find us</h2>
+        <address>
+          <ul class="info-list">
+            <li><span class="label">Address</span>Not yet</li>
+            <li><span class="label">Phone</span><a href="tel:+447415258997">0741 5258997</a></li>
+            <li><span class="label">Email</span><a href="mailto:hello@amberandash.example">email not made yet</a></li>
+          </ul>
+        </address>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact-box">
+        <div>
+          <h2>Say hello, or book a table.</h2>
+          <p>For groups of six or more, drop us a note and we'll hold a table for you. For everything else, we're always happy to hear from you.</p>
+        </div>
+        <form id="contactForm">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Table for four, Saturday at 10am?" required></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit">Send message</button>
+          <p class="form-note" id="formNote" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; width:100%;">
+    <span>&copy; 2026 Marmaduke's Home Bakery.</span>
+    <nav>
+      <ul style="list-style:none; display:flex; gap:20px; padding:0; margin:0;">
+        <li><a href="#about">About</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#visit">Visit</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Contact form — no backend, so this just gives feedback.
+  // Wire this up to Netlify Forms / Formspree / your own backend to actually receive messages.
+  const form = document.getElementById('contactForm');
+  const note = document.getElementById('formNote');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    note.textContent = 'Thanks — this form is a demo and isn\'t connected yet. See the code comments for how to wire it up.';
+    form.reset();
+  });
+</script>
+
+</body>
+</html>
